@@ -124,7 +124,7 @@
         echo "<h4 class = \"thread_menu_title\" style=\"text-align: center;\">Threads</h4>";
         echo "<form method=\"post\" style=\"text-align: center;\">";
         foreach($threads as $t) 
-            echo("<input type=\"submit\" value=\"$t\" name=\"thread\"\>");
+            echo("<input type=\"submit\" class=\"thread_select_button\" value=\"$t\" name=\"thread\"\>");
         echo "</form>";
     }
     function print_autoreload_script()
