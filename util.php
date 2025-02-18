@@ -22,11 +22,11 @@
         }
         function unpackMessage($msg)
         {
-            $lastSepPos = 0;
-            $array = explode("|", $msg, 5);
-            $time = unpack("i", $array[3])[1];
-            $array[0] = unpack("i", $array[0])[1];
-            $array[3] = Date("Y-m-d g:i a", (int)$time);
+            $id_text = substr($msg, 0, 4);
+            $date_text = substr($msg, 4, 8);
+            $msg_data = substr($msg, 8, strlen($msg));
+            $otherarray = explode("|", $msg_data, 3);
+            $array = array(unpack("i", $id_text)[1],  Date("Y-m-d g:i a", (int)unpack("i", $date_text)[1]), $otherarray[0], $otherarray[1], $otherarray[2]);
             return $array;
         }
         function getIp() {
@@ -116,22 +116,27 @@
         function printMessage($msg, int $offset=1)//$name, $msg, int $offset=1)
         {
             $id = $msg[0];
-            $name = $msg[1];
-            $ipAddr = $msg[2];
+            $date = $msg[1]; // date("Y/m/d g:i a", (int)$msg[2]);
+            $name = $msg[2];
+            $ipAddr = $msg[3];
+            $msg = $msg[4];
             try
             {
                 $ipOctets = explode('.', $ipAddr);
                 $ipAddr = "";
                 $count = (count($ipOctets) <= 3 ? count($ipOctets) : 3);
                 for ($i=0; $i<  $count; $i++)
+                {
                     $ipAddr = $ipAddr . ( ($i<2? $ipOctets[$i] :  preg_replace('/./', '*', $ipOctets[$i])) . ($i!=$count-1 ? "." : "") );
+                    if ($i>2)
+                        break;
+                }
             }
             catch(Exception $error)
             {
 
             }
-            $date = $msg[3]; // date("Y/m/d g:i a", (int)$msg[2]);
-            $msg = $msg[4];
+
             $offset *= 20;
             $msg = str_replace(array("\\n", "\\r"), "<br>", $msg);
             echo("<div id=\"{$id}\" style=\"background-color:pink; margin-left:{$offset}px; margin-bottom:0px; margin-top:0px; padding-top: 0px; padding-left: 5px;padding-bottom:5px;width:90%\">");

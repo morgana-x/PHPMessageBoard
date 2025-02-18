@@ -1,6 +1,7 @@
 <?php
     define("FORUM_TITLE", "Cool Messaging Board :3");
     session_start();
+    //include("initsql.php");
     include("util.php");
 
     $defaultThreads = array(
@@ -129,10 +130,9 @@
             $(document).ready(function(){
                 setInterval(function() {
                     $("#messageboard").load("message.php");
-                    console.log("Refreshed");
-                }, 10000);
+                }, 5000);
             });
-            </script>');
+        </script>');
     }
 
     $threads = getThreads();
@@ -159,6 +159,8 @@
         $key = isset($_POST[$key]) ? filter_input(INPUT_POST, $key, FILTER_DEFAULT) : null;
         $key = trim($key);
         $key = str_replace(array("\r", "\n"), '\\n', $key);
+        if (strlen($key) > 1024)
+            $key = substr($key, 0, 1024);
         return $key;
     }
     function sanitiseusername($name)
@@ -177,7 +179,7 @@
         $id = pack("i",time());
         $timePacked = pack("i", time());
         $ip = getIp();
-        fwrite($log, "{$id}|{$name}|{$ip}|{$timePacked}|{$msg}\n");
+        fwrite($log, "{$id}{$timePacked}{$name}|{$ip}|{$msg}\n");
         fclose($log);
         //printMessage($name, $msg);
     }
