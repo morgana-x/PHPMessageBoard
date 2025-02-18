@@ -1,4 +1,4 @@
 # PHPMessageBoard
 Old school message board written in php
 
-Credit for themes: @eeknom
+Credit for themes: [@eeknoM](https://github.com/eeknoM)
