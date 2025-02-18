@@ -87,7 +87,7 @@
         function printMessages(string $thread, $page=0)
         {
             $log = fopen(getThreadFile($thread), "r");
-            echo("<div style=\"background-color:powderblue; margin-top:10px; padding-top: 5px; padding-bottom: 0px; width: 95%; margin-bottom:0px;\">");
+            echo("<div>");
             $msgs = array();
             $numberOfItems = 0;
             while(!feof($log)) {
@@ -140,7 +140,7 @@
 
             $offset *= 20;
             $msg = str_replace(array("\\n", "\\r"), "<br>", $msg);
-            echo("<div id=\"{$id}\" style=\"background-color:pink; margin-left:{$offset}px; margin-bottom:0px; margin-top:0px; padding-top: 0px; padding-left: 5px;padding-bottom:5px;width:90%\">");
+            echo("<div id=\"{$id}\" class = \"thread_message\" style=\"background-color:pink; margin-left:{$offset}px; margin-bottom:0px; margin-top:0px; padding-top: 0px; padding-left: 5px;padding-bottom:5px;width:90%\">");
             echo("<h6>{$date}</h5>");
             echo("<h5>{$name}({$ipAddr}):</h5>");
             //echo("<h5>{$name}:</h5>");

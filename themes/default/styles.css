@@ -11,22 +11,68 @@ body,tr,td,th,input,textarea { font-family: "Comic Sans MS", cursive, sans-serif
 textarea {background-color:rgb(200, 200, 200)}
 
 .pattern {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/imgs/black-twill.png');
-    background-repeat: repeat-y;
+    background-image: url('/imgs/black-twill.png');
+    background-repeat: repeat;
+    background-size: auto;
     opacity: 1;
     z-index: -1;
 }
 
-.title_txt {
+
+.forum_title {
     position: relative;
     z-index: 2;
     font-size: 2em;
     color: white;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
     text-align: center;
+}
+.thread_title {
+    position: relative;
+    z-index: 2;
+    font-size: 2em;
+    color: rgb(230, 230, 230);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+
+.thread_menu_title {
+    position: relative;
+    z-index: 2;
+    font-size: 1em;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+
+.thread_board {
+    background-color:powderblue; 
+    margin-top:  5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5px; 
+    padding-bottom: 0px; 
+    width: 95%; 
+    margin-bottom: 0px;
+}
+
+.thread_message {
+    background-color:pink; 
+    margin-left: auto; 
+    margin-bottom: 0px; 
+    margin-top: 0px; 
+    padding-top: 0px; 
+    padding-left: 5px;
+    padding-bottom: 5px;
+    width: 90%;
+}
+
+.thread_message_inputbox {
+    margin-left: thread_board;
+    
 }

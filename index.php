@@ -54,8 +54,8 @@
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=Shift_JIS">
-            <title>Message Board</title>');
+            <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=Shift_JIS">');
+        echo("<title>{$FORUM_TITLE}</title>");
        /* echo('
             <style TYPE="text/css">
                 body,tr,td,th,input,textarea { font-family: "Comic Sans MS", cursive, sans-serif; }
@@ -102,26 +102,26 @@
                 </script>
             ');
         }
-        echo("<h1 align=center>{$FORUM_TITLE}</h1>");
-        echo("<h1 align=center>{$CURRENT_THREAD} thread</h1>");
+        echo("<h1 align=center class=\"forum_title\">{$FORUM_TITLE}</h1>");
+        echo("<h1 align=center class=\"thread_title\">{$CURRENT_THREAD} thread</h1>");
         //echo("</div>");
     }
     function print_message_input()
     {
-        echo('<div>
+        echo('<div class="thread_message_inputbox">
             <form action="index.php" method="post">
                 <label>username:</label><br>');
         $username = (isset( $_SESSION["temp_username"]) ?  $_SESSION["temp_username"] : "Anonymous");
         echo("<input type=\"text\" name=\"username\" value=\"{$username}\"><br>");
         echo('<label>message:</label><br>
-                <textarea name="message" rows="8" cols="80"></textarea><br>
+                <textarea name="message" rows="6" cols="80"></textarea><br>
                 <input type="submit" value="Post">
             </form>
         </div>');
     }
     function print_thread_bar($threads)
     {
-        echo "<h4 style=\"text-align: center;\">Threads</h4>";
+        echo "<h4 class = \"thread_menu_title\" style=\"text-align: center;\">Threads</h4>";
         echo "<form method=\"post\" style=\"text-align: center;\">";
         foreach($threads as $t) 
             echo("<input type=\"submit\" value=\"$t\" name=\"thread\"\>");
@@ -145,7 +145,7 @@
     print_thread_bar($threads);
     print_autoreload_script();
     print_message_input();
-    echo('<div id="messageboard">');
+    echo('<div id="messageboard" class="thread_board">');
     $thread = getCurrentThread();
     $page = print_pages($thread);
     printMessages($thread, $page);
