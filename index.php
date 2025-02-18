@@ -56,6 +56,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=Shift_JIS">');
         echo("<title>{$FORUM_TITLE}</title>");
+        echo('<link rel="icon" type="image/x-icon" href="/imgs/favicon/favicon.ico">');
        /* echo('
             <style TYPE="text/css">
                 body,tr,td,th,input,textarea { font-family: "Comic Sans MS", cursive, sans-serif; }
