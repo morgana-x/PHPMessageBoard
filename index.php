@@ -47,19 +47,22 @@
     {
         $FORUM_TITLE = FORUM_TITLE;
         $CURRENT_THREAD = getCurrentThread();
+        $CURRENT_THEME = "default";
+
         echo('<!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=Shift_JIS">
-            <title>Message Board</title>
+            <title>Message Board</title>');
+       /* echo('
             <style TYPE="text/css">
                 body,tr,td,th,input,textarea { font-family: "Comic Sans MS", cursive, sans-serif; }
                 textarea {background-color:rgb(200, 200, 200)}
-
-            </style>
-        </head>');
+            </style>');*/
+        echo( str_replace(array("{", "}"), "", "<link rel=\"stylesheet\" href=\"themes\{$CURRENT_THEME}\styles.css\">"));
+        echo('</head>');
         echo("<body style=\"background-color:pink;\">");
         if (isAdmin())
         {
@@ -107,9 +110,10 @@
     {
         echo('<div style="background-color:pink;">
             <form action="index.php" method="post">
-                <label>username:</label><br>
-                <input type="text" name="username" value="Anonymous"><br>
-                <label>message:</label><br>
+                <label>username:</label><br>');
+        $username = (isset( $_SESSION["temp_username"]) ?  $_SESSION["temp_username"] : "Anonymous");
+        echo("<input type=\"text\" name=\"username\" value=\"{$username}\"><br>");
+        echo('<label>message:</label><br>
                 <textarea name="message" rows="8" cols="80"></textarea><br>
                 <input type="submit" value="Post">
             </form>
@@ -285,6 +289,8 @@
         return;
     }
     $username = filterName();
+    setcookie("username", $username, time() + (86400 * 365), "/");
+    $_SESSION["temp_username"] = $username;
     appendmessage($thread, $username, $message);
     echo("<meta http-equiv='refresh' content='1'>"); 
 ?>
