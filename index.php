@@ -1,9 +1,8 @@
 <?php
     define("FORUM_TITLE", "Cool Messaging Board :3");
-    
+    session_start();
     include("util.php");
 
-    session_start();
     $defaultThreads = array(
         "main", 
         "cats", 

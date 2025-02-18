@@ -1,7 +1,6 @@
 <?php
 
         define("PAGE_SIZE", 50);
-
         function getThreadFile(string $thread)
         {
             return "threads/{$thread}.txt";
