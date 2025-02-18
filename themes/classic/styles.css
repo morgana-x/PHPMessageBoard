@@ -1,0 +1,11 @@
+body {
+    background-color: pink;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100;
+    margin: 0;
+}
+
+body,tr,td,th,input,textarea { font-family: "Comic Sans MS", cursive, sans-serif; }
+textarea {background-color:rgb(200, 200, 200)}
