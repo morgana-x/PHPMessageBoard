@@ -63,7 +63,7 @@
             </style>');*/
         echo( str_replace(array("{", "}"), "", "<link rel=\"stylesheet\" href=\"themes\{$CURRENT_THEME}\styles.css\">"));
         echo('</head>');
-        echo("<body style=\"background-color:pink;\">");
+        echo("<body>");
         if (isAdmin())
         {
             echo("<div align=right>");
@@ -75,7 +75,7 @@
         }
         else
         {
-            echo('<div id="loginpanel" style="background-color:pick;display:none;">
+            echo('<div id="loginpanel" style="display:none;">
                 <form align=right action="index.php" method="post">
                     <label>username:</label><br>
                     <input type="text" name="login_user" value=""><br>
@@ -108,7 +108,7 @@
     }
     function print_message_input()
     {
-        echo('<div style="background-color:pink;">
+        echo('<div>
             <form action="index.php" method="post">
                 <label>username:</label><br>');
         $username = (isset( $_SESSION["temp_username"]) ?  $_SESSION["temp_username"] : "Anonymous");
@@ -150,7 +150,7 @@
     $page = print_pages($thread);
     printMessages($thread, $page);
     echo('</div>');
-
+    echo('<div class="pattern"></div>');
 
     function filterName()
     {
