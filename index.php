@@ -1,6 +1,5 @@
 <?php
     session_start();
-    //include("initsql.php");
     include("util.php");
 
     $defaultThreads = array(
@@ -67,7 +66,7 @@
         echo("<title>{$FORUM_TITLE}</title>");
         echo('<link rel="icon" type="image/x-icon" href="/imgs/favicon/favicon.ico">');
         echo( str_replace(array("{", "}"), "", "<link rel=\"stylesheet\" href=\"themes\{$CURRENT_THEME}\styles.css\">"));
-        echo("<link rel=\"stylesheet\" href=\"core.css\">");
+        echo("<link rel=\"stylesheet\" href=\"themes/core.css\">");
         echo('</head>');
         echo("<body>");
         if (isAdmin())
@@ -305,6 +304,8 @@
         for ($i =0; $i < count($themes); $i++)
         {
             if (str_replace(".", "", $themes[$i]) == "")
+                continue;
+            if ($themes[$i] == "core.css")
                 continue;
             array_push($cleanThemes, $themes[$i]);
         }
