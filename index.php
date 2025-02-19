@@ -14,6 +14,13 @@
     );
     if (!is_dir(FORUM_DATA_FOLDER))
         mkdir(FORUM_DATA_FOLDER);
+    if (!file_exists(FORUM_DATA_FOLDER . "/.htaccess"))
+    {
+        touch(FORUM_DATA_FOLDER . "/.htaccess");
+        $threadaccess = fopen(THREAD_FOLDER."/.htaccess", "w");
+        fwrite($threadaccess, "Deny from all");
+        fclose($threadaccess);
+    }
     if (!file_exists("threads.txt"))
     {
         $threads_file = fopen("threads.txt", "w");
@@ -32,11 +39,6 @@
     $threads_file = fopen("threads.txt", "r");
     if (!is_dir(THREAD_FOLDER))
         mkdir(THREAD_FOLDER, 606, true);
-    if (!file_exists(THREAD_FOLDER."/.htaccess"))
-        touch(THREAD_FOLDER."/.htaccess");
-    $threadaccess = fopen(THREAD_FOLDER."/.htaccess", "w");
-    fwrite($threadaccess, "Allow from 127.0.0.1");
-    fclose($threadaccess);
 
     while(!feof($threads_file)) {
         $thread = fgets($threads_file);
