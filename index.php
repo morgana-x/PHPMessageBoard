@@ -13,6 +13,8 @@
     $defaultAdmins = array(
         "morgana|catsarecool!!!"
     );
+    if (!is_dir(FORUM_DATA_FOLDER))
+        mkdir(FORUM_DATA_FOLDER);
     if (!file_exists("threads.txt"))
     {
         $threads_file = fopen("threads.txt", "w");
