@@ -1,0 +1,101 @@
+body {
+    background-color: #1a1a1a;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100;
+    margin: 0;
+    color: #e0e0e0;
+}
+
+body, tr, td, th, input, textarea {
+    font-family: "Comic Sans MS", sans-serif;
+    color: #e0e0e0;
+}
+
+textarea {
+    background-color: #333333;
+    color: #e0e0e0;
+}
+
+.pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/imgs/bgs/light-snow.png');
+    background-repeat: repeat;
+    background-size: auto;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.forum_title, .thread_title {
+    position: relative;
+    z-index: 2;
+    font-size: 2em;
+    color: #ffffff;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.2);
+    text-align: center;
+}
+.thread_menu_title {
+    position: relative;
+    z-index: 2;
+    font-size: 1em;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+
+.thread_select_button {
+    background-color: #444;
+    border-radius: 100px;
+    box-shadow: rgba(255, 255, 255, 0.2) 0 -25px 18px -14px inset, rgba(100, 100, 100, 0.15) 0 1px 2px;
+    color: #f0f0f0;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Comic Sans MS", CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+    padding: 7px 20px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 250ms;
+    border: 0;
+    font-size: 16px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.thread_select_button:hover {
+    box-shadow: rgba(255, 255, 255, 0.35) 0 -25px 18px -14px inset, rgba(200, 200, 200, 0.25) 0 1px 2px;
+    transform: scale(1.05) rotate(-1deg);
+}
+
+.thread_board {
+    background-color: #222;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    width: 95%;
+    margin-bottom: 0px;
+    border-radius: 8px;
+}
+
+.thread_message {
+    background-color: #333;
+    margin-left: auto;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    width: 90%;
+    border-radius: 5px;
+}
+
+.thread_message_inputbox {
+    margin-left: 2.5%;
+}

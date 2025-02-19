@@ -47,7 +47,7 @@
     {
         $FORUM_TITLE = FORUM_TITLE;
         $CURRENT_THREAD = getCurrentThread();
-        $CURRENT_THEME = "default";
+        $CURRENT_THEME = getCurrentTheme();
 
         echo('<!DOCTYPE html>
         <html lang="en">
@@ -57,11 +57,6 @@
             <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=Shift_JIS">');
         echo("<title>{$FORUM_TITLE}</title>");
         echo('<link rel="icon" type="image/x-icon" href="/imgs/favicon/favicon.ico">');
-       /* echo('
-            <style TYPE="text/css">
-                body,tr,td,th,input,textarea { font-family: "Comic Sans MS", cursive, sans-serif; }
-                textarea {background-color:rgb(200, 200, 200)}
-            </style>');*/
         echo( str_replace(array("{", "}"), "", "<link rel=\"stylesheet\" href=\"themes\{$CURRENT_THEME}\styles.css\">"));
         echo('</head>');
         echo("<body>");
@@ -103,9 +98,9 @@
                 </script>
             ');
         }
+        print_theme_selct();
         echo("<h1 align=center class=\"forum_title\">{$FORUM_TITLE}</h1>");
         echo("<h1 align=center class=\"thread_title\">{$CURRENT_THREAD} thread</h1>");
-        //echo("</div>");
     }
     function print_message_input()
     {
@@ -139,7 +134,14 @@
             });
         </script>');
     }
-
+    function print_theme_selct()
+    {
+        echo(`<div class="theme-menu" style="text-align: left; position: absolute;top: 0px;">`);
+        echo "<form method=\"post\">";
+        echo("<button type=\"submit\" class=\"theme-option\" style=\"width: 50px; height:50px;position: absolute;top: 0px;background-color: transparent;border: none; padding: 0;\" value =\"default\" name=\"theme\">🎨</button>");
+        echo "</form>";
+        echo(`</div>`);
+    }
     $threads = getThreads();
     $thread = getCurrentThread();
     print_header();
@@ -198,10 +200,7 @@
                 continue;
             $msg = unpackMessage($msglog);
             if (strval($msg[0]) == strval($id))
-            {
-                echo("Found msg to be deleted!");
                 continue;
-            }
             $newTextDoc = $newTextDoc . ($msglog . "\n");
         }
         fclose($log);
@@ -255,7 +254,6 @@
         $pw = $_POST["login_pw"];
         unset($_POST["login_user"]);
         unset($_POST["login_pw"]);
-        //echo("Attempting login..." . $user . " " . $pw);
         attempt_login($user, $pw);
     }
     function checkAdminLogout()
@@ -268,16 +266,40 @@
         echo("Logged out!");
         echo("<meta http-equiv='refresh' content='1'>"); 
     }
-    if (!empty($_POST)) setcookie ("last_post", implode($_POST),time()+360000);
-    if (!empty($_POST) and $_COOKIE['last_post'] == implode($_POST)) unset($_POST["message"]);
-
-
+    function getThemes()
+    {
+        $themes = scandir("themes");
+        $cleanThemes = array();
+        for ($i =0; $i < count($themes); $i++)
+        {
+            if (str_replace(".", "", $themes[$i]) == "")
+                continue;
+            array_push($cleanThemes, $themes[$i]);
+        }
+        return $cleanThemes;
+    }
+    function getCurrentTheme()
+    {
+        return isset($_SESSION["theme"]) ? $_SESSION["theme"] : "default";
+    }
+    function checkThemeSet()
+    {
+        if (!isset($_POST["theme"])) return;
+        unset($_POST["theme"]);
+        $currentTheme = getCurrentTheme();
+        $themes = getThemes();
+        $index = (in_array($currentTheme, $themes) ? array_search($currentTheme, $themes) : 0) + 1;
+        if ($index >= count($themes))
+            $index = 0;
+        $_SESSION["theme"] = $themes[$index];
+    }
 
     $_SESSION["thread"] = $thread;
     checkAdminLogin();
     checkAdminLogout();
     checkDelete();
-    //chmod("thread", 0755);
+    checkThemeSet();
+
     if (!isset($_POST["message"]))
     {
         return;

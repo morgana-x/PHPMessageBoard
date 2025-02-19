@@ -7,7 +7,7 @@ body {
     margin: 0;
 }
 
-body,tr,td,th,input,textarea { font-family: "Comic Sans MS", cursive, sans-serif; }
+body,tr,td,th,input,textarea { font-family: "Comic Sans MS", sans-serif; }
 textarea {background-color:rgb(200, 200, 200)}
 
 .pattern {
@@ -57,7 +57,7 @@ textarea {background-color:rgb(200, 200, 200)}
     color: rgb(39, 39, 39);
     cursor: pointer;
     display: inline-block;
-    font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+    font-family: "Comic Sans MS", CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
     padding: 7px 20px;
     text-align: center;
     text-decoration: none;
