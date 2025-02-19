@@ -30,12 +30,19 @@
     }
     $threads_file = fopen("threads.txt", "r");
     if (!is_dir("threads"))
-        mkdir("threads", 0700, true);
+        mkdir("threads", 0600, true);
+    if (!file_exists("threads/.htaccess"))
+        touch("threads/.htaccess");
+    $threadaccess = fopen("threads/.htaccess", "w");
+    fwrite($threadaccess, "Allow from 127.0.0.1");
+    fclose($threadaccess);
+
     while(!feof($threads_file)) {
         $thread = fgets($threads_file);
         $thread = trim($thread);
         if ($thread == "") continue;
         $path = "threads/{$thread}.txt";
+        chmod($path, 0600);
         if (file_exists($path))
             continue;
         touch($path);
