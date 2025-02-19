@@ -24,7 +24,7 @@ textarea {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/imgs/bgs/light-snow.png');
+    background-image: url('/imgs/bgs/nice-snow.png');
     background-repeat: repeat;
     background-size: auto;
     opacity: 0.3;
@@ -73,29 +73,58 @@ textarea {
 }
 
 .thread_board {
-    background-color: #222;
-    margin-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 5px;
-    padding-bottom: 0px;
+    background: linear-gradient(to bottom right, #1e1e1e, #2a2a2a);
+    margin: 10px auto;
+    padding: 10px;
     width: 95%;
-    margin-bottom: 0px;
-    border-radius: 8px;
+    border-radius: 12px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); 
+    border: 1px solid #333;
+    color: #ddd;
 }
 
 .thread_message {
-    background-color: #333;
-    margin-left: auto;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    padding-top: 0px;
-    padding-left: 5px;
-    padding-bottom: 5px;
+    background: linear-gradient(to bottom right, #292929, #3a3a3a);
+    margin: 5px auto;
+    padding: 10px;
     width: 90%;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
+    border: 1px solid #444;
+    color: #ccc;
 }
 
 .thread_message_inputbox {
+    width: 95%;
+    max-width: 800px; 
     margin-left: 2.5%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #a1a3a5;
+    outline: none;
+    background: #1e1e1e;
+    color: #e0e0e0;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0px 4px 8px rgba(58, 117, 196, 0.3);
+    resize: vertical;
+    min-height: 80px;
+    max-height: 200px;
+}
+
+.thread_message_inputbox:focus {
+    border-color: #5aafff;
+    box-shadow: 0px 0px 12px rgba(90, 175, 255, 0.6);
+}
+
+.char_count {
+    font-size: 14px;
+    color: #bbb;
+    margin-left: 2.5%;
+    margin-top: 5px;
+}
+
+.char_count.warning {
+    color: #ff5757;
+    font-weight: bold;
 }
