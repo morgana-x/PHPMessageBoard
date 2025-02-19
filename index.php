@@ -58,6 +58,7 @@
         echo("<title>{$FORUM_TITLE}</title>");
         echo('<link rel="icon" type="image/x-icon" href="/imgs/favicon/favicon.ico">');
         echo( str_replace(array("{", "}"), "", "<link rel=\"stylesheet\" href=\"themes\{$CURRENT_THEME}\styles.css\">"));
+        echo("<link rel=\"stylesheet\" href=\"core.css\">");
         echo('</head>');
         echo("<body>");
         if (isAdmin())
@@ -102,19 +103,41 @@
         echo("<h1 align=center class=\"forum_title\">{$FORUM_TITLE}</h1>");
         echo("<h1 align=center class=\"thread_title\">{$CURRENT_THREAD} thread</h1>");
     }
-    function print_message_input()
+    function print_message_input() 
     {
+        echo("<br>");
         echo('<div class="thread_message_inputbox">
             <form action="index.php" method="post">
-                <label>username:</label><br>');
-        $username = (isset( $_SESSION["temp_username"]) ?  $_SESSION["temp_username"] : "Anonymous");
-        echo("<input type=\"text\" name=\"username\" value=\"{$username}\"><br>");
-        echo('<label>message:</label><br>
-                <textarea name="message" rows="6" cols="80"></textarea><br>
-                <input type="submit" value="Post">
-            </form>
+                <label>Username:</label><br>');
+        
+        $username = isset($_SESSION["temp_username"]) ? $_SESSION["temp_username"] : "Anonymous";
+        echo('<input type="text" name="username" value="' . htmlspecialchars($username, ENT_QUOTES) . '" class="input_field"><br>');
+        
+        echo('<label>Message:</label><br>
+                <textarea name="message" id="messageInput" rows="6" cols="80" maxlength="1024" class="message_textarea" placeholder="Type your message..."></textarea>
+                <input type="submit" value="Post" class="submit_button">
+                <span id="charCounter" class="char_count">1024 characters remaining</span>
+        </form>
         </div>');
+
+        echo('<script>
+                const inputBox = document.getElementById("messageInput");
+                const counter = document.getElementById("charCounter");
+                const maxLength = inputBox.getAttribute("maxlength");
+
+                inputBox.addEventListener("input", () => {
+                    let remaining = maxLength - inputBox.value.length;
+                    counter.textContent = `${remaining} characters remaining`;
+
+                    if (remaining <= 20) {
+                        counter.classList.add("warning");
+                    } else {
+                        counter.classList.remove("warning");
+                    }
+                });
+            </script>');
     }
+
     function print_thread_bar($threads)
     {
         echo "<h4 class = \"thread_menu_title\" style=\"text-align: center;\">Threads</h4>";

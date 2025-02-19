@@ -71,8 +71,8 @@
            
             if ($page > $numPages)
                 $page = $numPages-1;
-            echo("Page: {$page}<br>");
             if ($numPages == 1) return $page;
+            echo("Page: {$page}<br>");
             echo "<form method=\"post\">";
             for ($i =0; $i<15;$i++)
             {  
@@ -140,7 +140,7 @@
 
             $offset *= 20;
             $msg = str_replace(array("\\n", "\\r"), "<br>", $msg);
-            echo("<div id=\"{$id}\" class = \"thread_message\" style=\"margin-left:{$offset}px; margin-bottom:0px; margin-top:0px; padding-top: 0px; padding-left: 5px;padding-bottom:5px;width:90%\">");
+            echo("<div id=\"{$id}\" class = \"thread_message\" style=\"margin-left:{$offset}px; width:90%\">");
             echo("<h6>{$date}</h5>");
             echo("<h5>{$name}({$ipAddr}):</h5>");
             //echo("<h5>{$name}:</h5>");
