@@ -1,5 +1,4 @@
 <?php
-    define("FORUM_TITLE", "Cool Messaging Board :3");
     session_start();
     //include("initsql.php");
     include("util.php");
@@ -21,19 +20,20 @@
             fwrite($threads_file, "{$a}\n");
         fclose($threads_file);
     }
-    if (!file_exists("admin.txt"))
+    if (!file_exists(ADMIN_FILE))
     {
-        $admins_file = fopen("admin.txt", "w");
+        $admins_file = fopen(ADMIN_FILE, "w");
         foreach($defaultAdmins as $a)
             fwrite($admins_file, "{$a}\n");
         fclose($admins_file);
+        chmod(ADMIN_FILE, 606);
     }
     $threads_file = fopen("threads.txt", "r");
-    if (!is_dir("threads"))
-        mkdir("threads", 0600, true);
-    if (!file_exists("threads/.htaccess"))
-        touch("threads/.htaccess");
-    $threadaccess = fopen("threads/.htaccess", "w");
+    if (!is_dir(THREAD_FOLDER))
+        mkdir(THREAD_FOLDER, 606, true);
+    if (!file_exists(THREAD_FOLDER."/.htaccess"))
+        touch(THREAD_FOLDER."/.htaccess");
+    $threadaccess = fopen(THREAD_FOLDER."/.htaccess", "w");
     fwrite($threadaccess, "Allow from 127.0.0.1");
     fclose($threadaccess);
 
@@ -41,11 +41,11 @@
         $thread = fgets($threads_file);
         $thread = trim($thread);
         if ($thread == "") continue;
-        $path = "threads/{$thread}.txt";
-        chmod($path, 0600);
+        $path = THREAD_FOLDER . "/{$thread}.txt";
         if (file_exists($path))
             continue;
         touch($path);
+        chmod($path, 0600);
     }
 
     
@@ -242,7 +242,7 @@
 
     function attempt_login($user, $pw)
     {
-        $log = fopen("admin.txt", "r");
+        $log = fopen(ADMIN_FILE, "r");
         while(!feof($log)) {
             $msglog = trim(fgets($log));
             if ($msglog == "")
@@ -343,7 +343,7 @@
         return;
     }
     $username = filterName();
-    setcookie("username", $username, time() + (86400 * 365), "/");
+   // setcookie("username", $username, time() + (86400 * 365), "/");
     $_SESSION["temp_username"] = $username;
     appendmessage($thread, $username, $message);
     echo("<meta http-equiv='refresh' content='1'>"); 

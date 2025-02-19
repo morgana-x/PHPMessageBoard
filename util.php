@@ -1,9 +1,8 @@
 <?php
-
-        define("PAGE_SIZE", 50);
+        include("config.php");
         function getThreadFile(string $thread)
         {
-            return "threads/{$thread}.txt";
+            return THREAD_FOLDER . "/{$thread}.txt";
         }
         function getThreads()
         {
