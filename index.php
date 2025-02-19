@@ -292,6 +292,7 @@
         if ($index >= count($themes))
             $index = 0;
         $_SESSION["theme"] = $themes[$index];
+        echo("<meta http-equiv='refresh' content='1'>"); 
     }
 
     $_SESSION["thread"] = $thread;
