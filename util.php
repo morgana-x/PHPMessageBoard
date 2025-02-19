@@ -141,10 +141,10 @@
             $offset *= 20;
             $msg = str_replace(array("\\n", "\\r"), "<br>", $msg);
             echo("<div id=\"{$id}\" class = \"thread_message\" style=\"margin-left:{$offset}px; width:90%\">");
-            echo("<h6>{$date}</h5>");
-            echo("<h5>{$name}({$ipAddr}):</h5>");
+            echo("<h6 style=\"margin-top:0px; margin-bottom:0px;\">{$date}</h5>");
+            echo("<h5 style=\"margin-top:0px; margin-bottom:0px;\">{$name}({$ipAddr}):</h5>");
             //echo("<h5>{$name}:</h5>");
-            echo("<p>{$msg}</p>");
+            echo("<p style=\"margin-top:0px; margin-bottom:0px;\">{$msg}</p>");
             $thread = getCurrentThread();
             $deletePacket = "{$id}|{$thread}";
             if (isAdmin())
