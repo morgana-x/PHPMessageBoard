@@ -14,10 +14,11 @@
     );
     if (!is_dir(FORUM_DATA_FOLDER))
         mkdir(FORUM_DATA_FOLDER);
+
     if (!file_exists(FORUM_DATA_FOLDER . "/.htaccess"))
     {
         touch(FORUM_DATA_FOLDER . "/.htaccess");
-        $threadaccess = fopen(THREAD_FOLDER."/.htaccess", "w");
+        $threadaccess = fopen(FORUM_DATA_FOLDER . "/.htaccess", "wb");
         fwrite($threadaccess, "Deny from all");
         fclose($threadaccess);
     }
