@@ -22,6 +22,13 @@
         fwrite($threadaccess, "Deny from all");
         fclose($threadaccess);
     }
+    if (!file_exists(THREAD_FOLDER . "/.htaccess"))
+    {
+        touch(THREAD_FOLDER . "/.htaccess");
+        $threadaccess = fopen(THREAD_FOLDER . "/.htaccess", "wb");
+        fwrite($threadaccess, "Deny from all");
+        fclose($threadaccess);
+    }
     if (!file_exists("threads.txt"))
     {
         $threads_file = fopen("threads.txt", "w");
