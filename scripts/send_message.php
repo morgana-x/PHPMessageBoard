@@ -2,9 +2,10 @@
         session_start();
         include("../config.php");
         include("util.php");
+        include("image_upload.php");
         function filterMessage($key)
         {
-            $key = isset($_POST[$key]) ? filter_input(INPUT_POST, $key, FILTER_DEFAULT) : null;
+            $key = isset($_POST[$key]) ? filter_input(INPUT_POST, $key, FILTER_DEFAULT) : "";
             $key = trim($key);
             $key = str_replace(array("\r", "\n"), '\\n', $key);
             if (strlen($key) > 1024)
@@ -31,10 +32,12 @@
             fclose($log);
             //printMessage($name, $msg);
         }
-
-        if (!isset($_POST["message"]))
+        $uploadedFile = check_image_upload();
+        if ( $uploadedFile == "" and !isset($_POST["message"]))
             return;
         $message = filterMessage("message");
+        if ($uploadedFile != "")
+            $message .= "<br><img src=\"$uploadedFile\" alt=\"Uploaded file\">";
         if (trim($message) == "")
             return;
         $thread = getCurrentThread();

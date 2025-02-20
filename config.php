@@ -5,7 +5,31 @@
     define("ADMIN_FILE", FORUM_DATA_FOLDER."/admin.txt");
     define("THREAD_FOLDER", FORUM_DATA_FOLDER."/threads");
     define("THREAD_FILE",  __DIR__ . "/threads.txt");
-
+    define("UPLOADS_FOLDER_RELATIVE", "uploads");
+    define("UPLOADS_FOLDER", __DIR__ . "/" . UPLOADS_FOLDER_RELATIVE);
+    define("UPLOADS_ALLOWEDEXTENSIONS", array("png", "jpg", "jpeg", "webp"));
+    define("UPLOADS_MAX_WIDTH", 1024);
+    define("UPLOADS_MAX_HEIGHT", 848);
+    define("UPLOADS_ALLOWEDFORMATS", array (
+        // IMAGETYPE_GIF,
+         IMAGETYPE_JPEG,
+         IMAGETYPE_PNG,
+       //  IMAGETYPE_SWF,
+      //   IMAGETYPE_PSD,
+         IMAGETYPE_BMP,
+     //    IMAGETYPE_TIFF_II,
+     /*    IMAGETYPE_TIFF_MM,
+         IMAGETYPE_JPC,
+         IMAGETYPE_JP2,
+         IMAGETYPE_JPX,
+         IMAGETYPE_JB2,*/
+      //   IMAGETYPE_SWC,
+      //   IMAGETYPE_IFF,*/
+         IMAGETYPE_WBMP,
+        // IMAGETYPE_XBM,
+        // IMAGETYPE_ICO 
+     ));
+    define("UPLOADS_MAXFILESIZE",1000000); // 1000000
     $defaultThreads = array(
         "main", 
         "cats", 
@@ -21,6 +45,9 @@
 
     if (!is_dir(THREAD_FOLDER))
         mkdir(THREAD_FOLDER);
+
+    if (!is_dir(UPLOADS_FOLDER))
+        mkdir(UPLOADS_FOLDER);
 
     if (!file_exists(FORUM_DATA_FOLDER . "/.htaccess"))
     {
