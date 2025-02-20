@@ -51,6 +51,7 @@
 <button type="submit" class="theme-option" style="width: 50px; height:50px;position: absolute;top: 0px;background-color: transparent;border: none; padding: 0;" value ="default" name="theme">🎨</button>
 </form>
 </div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <?php
     echo("<h1 align=center class=\"forum_title\">{$FORUM_TITLE}</h1>");
 ?>
