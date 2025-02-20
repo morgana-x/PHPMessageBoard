@@ -37,8 +37,9 @@
 </div>
 
 <br>
-<div class="thread_message_inputbox">
-    <form action="scripts/send_message.php" method="post" id="thread_message_input_forum" enctype="multipart/form-data">
+
+<form action="scripts/send_message.php" method="post" id="thread_message_input_forum" enctype="multipart/form-data">
+<div class="thread_message_inputbox" id="thread_message_inputbox">
         <label>Username:</label><br>
         <?php
             $username = isset($_SESSION["temp_username"]) ? $_SESSION["temp_username"] : "Anonymous";
@@ -50,8 +51,8 @@
         <input type="submit" value="Post" class="submit_button">
         <span id="charCounter" class="char_count">1024 characters remaining</span>
 
-
         <script>
+            //document.getElementById("thread_message_inputbox").style.height =  document.getElementById("messageInput").height;
             $("#thread_message_input_forum").submit(function(e) {
                 /*if (document.getElementById("msg_attachment").value)
                     return;*/
@@ -84,9 +85,8 @@
                 });
             });
         </script>
-    </form>
-
-</div>
+        </div>
+</form>
 
 
 <script>
