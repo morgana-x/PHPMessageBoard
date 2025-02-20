@@ -4,7 +4,7 @@
         //print_r($_FILES);
         if (!isset($_FILES["file"]))
         {
-            echo("No uploaded file!");
+            //echo("No uploaded file!");
             return "";
         }
         $uploadFile = $_FILES["file"];
