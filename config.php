@@ -18,6 +18,9 @@
     if (!is_dir(FORUM_DATA_FOLDER))
         mkdir(FORUM_DATA_FOLDER);
 
+    if (!is_dir(THREAD_FOLDER))
+        mkdir(THREAD_FOLDER);
+
     if (!file_exists(FORUM_DATA_FOLDER . "/.htaccess"))
     {
         touch(FORUM_DATA_FOLDER . "/.htaccess");

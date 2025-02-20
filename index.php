@@ -9,11 +9,9 @@
     session_start();
     include("config.php");
     include("scripts/util.php");
-    include("header.php");
+    include("scripts/header.php");
     include("scripts/admin.php");
     include("scripts/thread.php");
-    checkThemeSet();
-    check_send_message();
 ?>
 
 <div class="pattern"></div>
