@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=Shift_JIS">
-    <link rel="icon" type="image/x-icon" href="/imgs/favicon/favicon.ico">
 <?php
     $FORUM_TITLE = FORUM_TITLE;
     $CURRENT_THEME = getCurrentTheme();
