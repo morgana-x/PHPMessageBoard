@@ -2,7 +2,7 @@
     $FORUM_TITLE = FORUM_TITLE;
     $CURRENT_THEME = getCurrentTheme();
     echo("<title>{$FORUM_TITLE}</title>");
-    echo( str_replace(array("{", "}"), "", "<link rel=\"stylesheet\" href=\"themes\{$CURRENT_THEME}\styles.css\">"));
+    echo( str_replace(array("{", "}"), "", "<link rel=\"stylesheet\" id=\"forum_theme_link\" href=\"themes\{$CURRENT_THEME}\styles.css\">"));
     echo("<link rel=\"stylesheet\" href=\"themes/core.css\">");
     echo('</head>');
     echo("<body>");
@@ -45,13 +45,26 @@
         ');
     }
 ?>
-
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <div class="theme-menu" style="text-align: left; position: absolute;top: 0px;">
-<form method="post">
+<form method="post" id="theme_input_form"> <!-- action="scripts/theme.php"> -->
 <button type="submit" class="theme-option" style="width: 50px; height:50px;position: absolute;top: 0px;background-color: transparent;border: none; padding: 0;" value ="default" name="theme">🎨</button>
+<script>
+     $("#theme_input_form").submit(function(e) {
+        e.preventDefault(); // prevent page refresh
+        $.ajax({
+            type: "POST",
+            url: "scripts/theme.php",
+            data: $(this).serialize(), // serialize form data
+            success: function(data) {document.getElementById("forum_theme_link").setAttribute("href", data); },
+            error: function() {
+                // Error ...
+            }
+        });
+    });
+</script>
 </form>
 </div>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 <?php
     echo("<h1 align=center class=\"forum_title\">{$FORUM_TITLE}</h1>");
 ?>
