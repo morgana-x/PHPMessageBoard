@@ -1,9 +1,10 @@
 <?php
     define("FORUM_TITLE", "Cool Messaging Board :3");
     define("PAGE_SIZE", 50);
-    define("FORUM_DATA_FOLDER", "../MSGBOARD_DATA");
-    define("THREAD_FOLDER", FORUM_DATA_FOLDER."/threads");
+    define("FORUM_DATA_FOLDER", __DIR__. "/MSGBOARD_DATA");
     define("ADMIN_FILE", FORUM_DATA_FOLDER."/admin.txt");
+    define("THREAD_FOLDER", FORUM_DATA_FOLDER."/threads");
+    define("THREAD_FILE",  __DIR__ . "/threads.txt");
 
     $defaultThreads = array(
         "main", 
@@ -35,9 +36,9 @@
         fwrite($threadaccess, "Deny from all");
         fclose($threadaccess);
     }
-    if (!file_exists("threads.txt"))
+    if (!file_exists(THREAD_FILE))
     {
-        $threads_file = fopen("threads.txt", "w");
+        $threads_file = fopen(THREAD_FILE, "w");
         foreach($defaultThreads as $a)
             fwrite($threads_file, "{$a}\n");
         fclose($threads_file);
@@ -50,7 +51,7 @@
         fclose($admins_file);
         chmod(ADMIN_FILE, 606);
     }
-    $threads_file = fopen("threads.txt", "r");
+    $threads_file = fopen(THREAD_FILE, "r");
     if (!is_dir(THREAD_FOLDER))
         mkdir(THREAD_FOLDER, 606, true);
 

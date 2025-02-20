@@ -6,7 +6,7 @@
         function getThreads()
         {
             $tempthreads = array();
-            $threads_file = fopen("threads.txt", "r");
+            $threads_file = fopen(THREAD_FILE, "r");
             $i=0;
             while(!feof($threads_file)) {
                 $t = fgets($threads_file);
