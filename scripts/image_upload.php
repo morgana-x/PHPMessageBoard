@@ -15,11 +15,11 @@
         }
 
         $userFolder = substr(hash('crc32', getIp()),0,5);
-        if (!is_dir($userFolder))
-            mkdir($userFolder);
+        if (!is_dir(UPLOADS_FOLDER . "/" . $userFolder))
+            mkdir(UPLOADS_FOLDER . "/" .$userFolder);
         
-        $imgDest = $userFolder ."/". strval(time()) . "z" . $uploadFile["name"];
-        if (file_exists($imgDest))
+        $imgDest =  $userFolder ."/". strval(time()) . "z" . $uploadFile["name"];
+        if (file_exists( UPLOADS_FOLDER . "/" . $imgDest))
         {
             echo("Error uploading file! File already exists??!?!?!");
             unset($_FILES["file"]);

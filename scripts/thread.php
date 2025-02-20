@@ -72,12 +72,15 @@
                     data: data,// $(this).serialize(), // serialize form data
                     success: function(data) {
                         // Success ...
+                        if (document.getElementById("msg_attachment").value)
+                            document.getElementById("msg_attachment").value = null;
                         console.log(data);
                         if (data!="")
                             alert(data);
                         document.getElementById("messageInput").value = "";
                         $("#messageboard").load("scripts/get_messages.php");
                         //$("thread_menu_title").load(scripts/)
+         
                     },
                     error: function() {
                         // Error ...
