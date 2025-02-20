@@ -1,5 +1,8 @@
 <?php
         session_start();
+        include("../config.php");
+        include("util.php");
+        if (isBanned(getIp())) return;
         function getThemes()
         {
             $themes = scandir("../themes");

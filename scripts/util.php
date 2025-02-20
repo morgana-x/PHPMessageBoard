@@ -37,6 +37,55 @@
                 ?: getenv('REMOTE_ADDR');   
             return $ip;
         }
+        function getBannedIps()
+        {
+            $bans = array();
+            $log = fopen(BAN_FILE, "r");
+            while(!feof($log)) {
+                $msglog = trim(fgets($log));
+                if ($msglog == "")
+                    continue;
+                $msg = unpackBan($msglog);
+                $bans[$msg[0]] = $msg[1];
+            }
+            fclose($log);
+            return $bans;
+        }
+        function unpackBan($msg)
+        {
+            $date = substr($msg, 0, 4);
+            $ip = substr($msg, 4, strlen($msg));
+            return array($ip, unpack("i", $date)[1]);
+        }
+        function updateBans()
+        {
+            $log = fopen(BAN_FILE, "r");
+            $newbans = "";
+            while(!feof($log)) {
+                $msglog = trim(fgets($log));
+                if ($msglog == "")
+                    continue;
+                $msg = unpackBan($msglog);
+                if (time() > $msg[1]) continue;
+                $newbans += (pack("i",$msg[1]) . $msg[0] . "\n");
+            }
+            fclose($log);
+            $log = fopen(BAN_FILE, "w");
+            fwrite($log, $newbans);
+            fclose($log);
+    
+        }
+        function isBanned($ip)
+        {
+            return in_array($ip, array_keys(getBannedIps()));
+        }
+        function banIP($ip, $duration=172800) // 604800
+        {
+            if (isBanned($ip)) return; // Too lazy and its 4 am
+            $log = fopen(BAN_FILE, "a");
+            fwrite($log, pack("i", time() + $duration) . $ip . "\n" );
+            fclose($log);
+        }
         function getCurrentThread()
         {
             $threads = getThreads();

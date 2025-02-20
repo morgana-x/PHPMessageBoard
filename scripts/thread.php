@@ -128,6 +128,22 @@ echo('
                     }
                 });
             }  
+            function banMessage(thread, id)
+            {
+                if (!confirm("Hold up!!! Do you really want to temp ban this guy!?!?!?!")) return;
+                $.ajax({
+                    type: "POST",
+                    url: "scripts/admin.php",
+                    data: {"ban_msg_thread":thread, "ban_msg_id":id}, // serialize form data
+                    success: function(data) {
+                        // Success ...
+                        $("#messageboard").load("scripts/get_messages.php");
+                    },
+                    error: function() {
+                        // Error ...
+                    }
+                });
+            }  
 </script>'
 );
 }

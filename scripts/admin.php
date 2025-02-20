@@ -2,6 +2,8 @@
     session_start();
     include("../config.php");
     include("util.php");
+    if (isBanned(getIp())) return;
+    
     function checkAdminLogin()
     {
         if ((!isset($_POST["login_user"])) or !isset($_POST["login_pw"]))
@@ -62,6 +64,23 @@
         fclose($log);
         echo("Deleted message " . $id);
     }
+    function banMessagePoster($thread, $id)
+    {
+        $log = fopen(getThreadFile($thread), "r");
+        while(!feof($log)) {
+            $msglog = trim(fgets($log));
+            if ($msglog == "")
+                continue;
+            $msg = unpackMessage($msglog);
+            strval($msg[0]);
+            if (strval($msg[0]) != strval($id))
+                continue;
+            banIP($msg[3]);
+            break;
+        }
+        fclose($log);
+        deleteMessage($thread, $id);
+    }
 
 
     function checkDelete()
@@ -78,7 +97,22 @@
         echo($deleteThread);
         deleteMessage($deleteThread, $deleteId);
     }
+    function checkBan()
+    {
+        if(!isAdmin()) return;
+        if ((!isset($_POST["ban_msg_thread"])) or !isset($_POST["ban_msg_id"]))
+            return;
+        echo("Check ban!2");
+        $deleteId = $_POST["ban_msg_id"];
+        $deleteThread = $_POST["ban_msg_thread"];
+        unset($_POST["ban_msg_thread"]);
+        unset($_POST["ban_msg_id"]);
+        echo($deleteId . "<br>");
+        echo($deleteThread);
+        banMessagePoster($deleteThread, $deleteId);
+    }
     checkAdminLogin();
     checkAdminLogout();
     checkDelete();
+    checkBan();
 ?>

@@ -3,6 +3,7 @@
     define("PAGE_SIZE", 50);
     define("FORUM_DATA_FOLDER", __DIR__. "/MSGBOARD_DATA");
     define("ADMIN_FILE", FORUM_DATA_FOLDER."/admin.txt");
+    define("BAN_FILE", FORUM_DATA_FOLDER."/ban.txt");
     define("THREAD_FOLDER", FORUM_DATA_FOLDER."/threads");
     define("THREAD_FILE",  __DIR__ . "/threads.txt");
     define("UPLOADS_FOLDER_RELATIVE", "uploads");
@@ -49,20 +50,18 @@
     if (!is_dir(UPLOADS_FOLDER))
         mkdir(UPLOADS_FOLDER);
 
-    if (!file_exists(FORUM_DATA_FOLDER . "/.htaccess"))
-    {
-        touch(FORUM_DATA_FOLDER . "/.htaccess");
-        $threadaccess = fopen(FORUM_DATA_FOLDER . "/.htaccess", "wb");
-        fwrite($threadaccess, "Deny from all");
-        fclose($threadaccess);
-    }
-    if (!file_exists(THREAD_FOLDER . "/.htaccess"))
-    {
-        touch(THREAD_FOLDER . "/.htaccess");
-        $threadaccess = fopen(THREAD_FOLDER . "/.htaccess", "wb");
-        fwrite($threadaccess, "Deny from all");
-        fclose($threadaccess);
-    }
+
+    touch(FORUM_DATA_FOLDER . "/.htaccess");
+    $threadaccess = fopen(FORUM_DATA_FOLDER . "/.htaccess", "wb");
+    fwrite($threadaccess, "order deny,allow\ndeny from all\nallow from 127.0.0.1");
+    fclose($threadaccess);
+
+
+    touch(THREAD_FOLDER . "/.htaccess");
+    $threadaccess = fopen(THREAD_FOLDER . "/.htaccess", "wb");
+    fwrite($threadaccess, "order deny,allow\ndeny from all\nallow from 127.0.0.1");
+    fclose($threadaccess);
+
     if (!file_exists(THREAD_FILE))
     {
         $threads_file = fopen(THREAD_FILE, "w");
@@ -76,7 +75,12 @@
         foreach($defaultAdmins as $a)
             fwrite($admins_file, "{$a}\n");
         fclose($admins_file);
-        chmod(ADMIN_FILE, 606);
+        //chmod(ADMIN_FILE, 606);
+    }
+    if (!file_exists(BAN_FILE))
+    {
+        touch(BAN_FILE);
+       // chmod(BAN_FILE, 606);
     }
     $threads_file = fopen(THREAD_FILE, "r");
     if (!is_dir(THREAD_FOLDER))

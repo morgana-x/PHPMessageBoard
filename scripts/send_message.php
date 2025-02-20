@@ -2,6 +2,7 @@
         session_start();
         include("../config.php");
         include("util.php");
+        if (isBanned(getIp())) return;
         include("image_upload.php");
         function filterMessage($key)
         {

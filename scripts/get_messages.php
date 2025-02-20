@@ -2,6 +2,7 @@
         session_start();
         include("../config.php");
         include("util.php");
+        if (isBanned(getIp())) return;
         function getNumberOfPages($thread)
         {
             $linecount = 0; 
@@ -96,6 +97,7 @@
             {
                 //echo "<form method=\"post\" style=\"text-align: center;\">";
                 echo("<button onclick=\"deleteMessage('$thread', '$id');\">Delete</button>");
+                echo("<button onclick=\"banMessage('$thread', '$id');\">Ban</button>");
                 //echo "</form>";
             }
             echo("</div><br>");
