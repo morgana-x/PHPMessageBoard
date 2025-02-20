@@ -7,7 +7,7 @@
     define("THREAD_FILE",  __DIR__ . "/threads.txt");
     define("UPLOADS_FOLDER_RELATIVE", "uploads");
     define("UPLOADS_FOLDER", __DIR__ . "/" . UPLOADS_FOLDER_RELATIVE);
-    define("UPLOADS_ALLOWEDEXTENSIONS", array("png", "jpg", "jpeg", "webp"));
+    define("UPLOADS_ALLOWEDEXTENSIONS", array("png", "jpg", "jpeg", "webp", "jfif"));
     define("UPLOADS_MAX_WIDTH", 1024);
     define("UPLOADS_MAX_HEIGHT", 848);
     define("UPLOADS_ALLOWEDFORMATS", array (
