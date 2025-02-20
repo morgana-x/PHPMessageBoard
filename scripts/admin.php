@@ -3,7 +3,7 @@
     include("../config.php");
     include("util.php");
     if (isBanned(getIp())) return;
-    
+
     function checkAdminLogin()
     {
         if ((!isset($_POST["login_user"])) or !isset($_POST["login_pw"]))
@@ -37,7 +37,7 @@
             if ($user == $args[0] and $pw == $args[1])
             {
                 $_SESSION["admin_username"] = $user;
-                echo("<meta http-equiv='refresh' content='1'>"); 
+                //echo("<meta http-equiv='refresh' content='1'>"); 
                 return true;
             }
         }
