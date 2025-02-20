@@ -92,8 +92,30 @@
                     }
                 });
 </script>
-
-
+<?php
+if (isAdmin())
+{
+echo('
+<script>
+            function deleteMessage(thread, id)
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "scripts/admin.php",
+                    data: {"del_msg_thread":thread, "del_msg_id":id}, // serialize form data
+                    success: function(data) {
+                        // Success ...
+                        $("#messageboard").load("scripts/get_messages.php");
+                    },
+                    error: function() {
+                        // Error ...
+                    }
+                });
+            }  
+</script>'
+);
+}
+?>
 <div id="messageboard" class="thread_board">
 </div>
 <script>

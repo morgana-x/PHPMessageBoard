@@ -10,7 +10,6 @@
     include("config.php");
     include("scripts/util.php");
     include("scripts/header.php");
-    include("scripts/admin.php");
     include("scripts/thread.php");
 ?>
 

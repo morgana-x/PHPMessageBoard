@@ -91,12 +91,12 @@
             //echo("<h5>{$name}:</h5>");
             echo("<p style=\"margin-top:0px; margin-bottom:0px;\">{$msg}</p>");
             $thread = getCurrentThread();
-            $deletePacket = "{$id}|{$thread}";
+           
             if (isAdmin())
             {
-                echo "<form method=\"post\" style=\"text-align: center;\">";
-                echo("<button type=\"submit\" value=\"{$deletePacket}\" name=\"delete\"\>Delete</button>");
-                echo "</form>";
+                //echo "<form method=\"post\" style=\"text-align: center;\">";
+                echo("<button onclick=\"deleteMessage('$thread', '$id');\">Delete</button>");
+                //echo "</form>";
             }
             echo("</div><br>");
         }

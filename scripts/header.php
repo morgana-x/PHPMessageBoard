@@ -8,38 +8,72 @@
     echo("<body>");
     if (isAdmin())
     {
+        echo('<script>function logout()
+            {
+                  $.ajax({
+                    type: "POST",
+                    url: "scripts/admin.php",
+                    data: {"logout":"true"}, // serialize form data
+                    success: function(data) {
+                        // Success ...
+                        location.reload()
+                    },
+                    error: function() {
+                        // Error ...
+                    }
+                });
+            }</script>');
         echo("<div align=right>");
         echo("<h4 align=right>{$_SESSION["admin_username"]}</h4>");
-        echo('<form align=right action="index.php" method="post">');
-        echo('<button type="submit" name="logout" value="logout">Logout</button>');
-        echo('</form>');
+        //echo('<form align=right action="scripts/admin.php" method="post">');
+       // echo('<button type="submit" name="logout" value="logout">Logout</button>');
+        echo('<button onclick="logout()">Logout</button>');
+        //echo('</form>');
         echo("</div>");
     }
     else
     {
-        echo('<div id="loginpanel" style="display:none;">
-            <form align=right action="index.php" method="post">
-                <label>username:</label><br>
-                <input type="text" name="login_user" value=""><br>
-                <label>password:</label><br>
-                <input type="text" name="login_pw" value=""><br>
-                <input type="submit" value="Login">
-            </form>');
-        echo("</div>");
         echo("<div align=right><button id=\"loginbutton\" align=right onclick=\"toggleAdminPanel()\">Login</button></div>");
-        echo('
-            <script>
+        echo('<div id="loginpanel" style="display:none;" align=right>');
+          //  <form align=right action="scripts/admin.php" method="post">
+          //login(document.getElementById("login_user_input").value,document.getElementById("login_pw_input").value);
+        echo('<label>username:</label><br>
+                <input type="text" name="login_user" value="" id="login_user_input"><br>
+                <label>password:</label><br>
+                <input type="text" name="login_pw" value="" id="login_pw_input"><br>
+                <button onclick="login(document.getElementById(`login_user_input`).value,document.getElementById(`login_pw_input`).value);">Log in</button>'); //          <input type="submit" value="Login">');
+          //  </form>');
+        echo("</div>");
+        echo('<script>
             function toggleAdminPanel(element, color) {
-            if (document.getElementById("loginpanel").style.display == "none")
-            {
-                    document.getElementById("loginpanel").style.display = "block";
-                    document.querySelector("#loginbutton").innerText = "Close";
+                if (document.getElementById("loginpanel").style.display == "none")
+                {
+                        document.getElementById("loginpanel").style.display = "block";
+                        document.querySelector("#loginbutton").innerText = "Close";
+                }
+                else
+                {
+                        document.getElementById("loginpanel").style.display = "none";
+                        document.querySelector("#loginbutton").innerText = "Login";
+                }
             }
-            else
+            function login(user,pw)
             {
-                    document.getElementById("loginpanel").style.display = "none";
-                    document.querySelector("#loginbutton").innerText = "Login";
-            }
+                $.ajax({
+                    type: "POST",
+                    url: "scripts/admin.php",
+                    data: {"login_user":user, "login_pw":pw}, // serialize form data
+                    success: function(data) {
+                        console.log(data);
+                        // Success ...
+                        if (data == "logged in")
+                            location.reload()
+                        
+                    },
+                    error: function() {
+                        // Error ...
+                    }
+                });
             }
             </script>
         ');
