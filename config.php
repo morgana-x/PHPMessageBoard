@@ -5,6 +5,7 @@
     define("ADMIN_FILE", FORUM_DATA_FOLDER."/admin.txt");
     define("BAN_FILE", FORUM_DATA_FOLDER."/ban.txt");
     define("THREAD_FOLDER", FORUM_DATA_FOLDER."/threads");
+    define("THEME_FOLDER", __DIR__."/themes");
     define("THREAD_FILE",  __DIR__ . "/threads.txt");
     define("UPLOADS_FOLDER_RELATIVE", "uploads");
     define("UPLOADS_FOLDER", __DIR__ . "/" . UPLOADS_FOLDER_RELATIVE);
@@ -49,6 +50,9 @@
 
     if (!is_dir(UPLOADS_FOLDER))
         mkdir(UPLOADS_FOLDER);
+
+    if (!is_dir(THEME_FOLDER))
+        mkdir(THEME_FOLDER);
 
 
     touch(FORUM_DATA_FOLDER . "/.htaccess");

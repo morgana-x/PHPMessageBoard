@@ -113,7 +113,7 @@
       
         function getThemes()
         {
-            $themes = scandir("themes");
+            $themes = scandir(THEME_FOLDER);
             $cleanThemes = array();
             for ($i =0; $i < count($themes); $i++)
             {
@@ -128,19 +128,6 @@
         function getCurrentTheme()
         {
             return isset($_SESSION["theme"]) ? $_SESSION["theme"] : "default";
-        }
-        function checkThemeSet()
-        {
-            if (!isset($_POST["theme"])) return false;
-            unset($_POST["theme"]);
-            $currentTheme = getCurrentTheme();
-            $themes = getThemes();
-            $index = (in_array($currentTheme, $themes) ? array_search($currentTheme, $themes) : 0) + 1;
-            if ($index >= count($themes))
-                $index = 0;
-            $_SESSION["theme"] = $themes[$index];
-            echo("<meta http-equiv='refresh' content='1'>"); 
-            return true;
         }
        // if (checkThemeSet()) { echo($_SESSION["theme"]); return;}
         

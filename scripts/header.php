@@ -81,23 +81,20 @@
 ?>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <div class="theme-menu" style="text-align: left; position: absolute;top: 0px;">
-<form method="post" id="theme_input_form"> <!-- action="scripts/theme.php"> -->
-<button type="submit" class="theme-option" style="width: 50px; height:50px;position: absolute;top: 0px;background-color: transparent;border: none; padding: 0;" value ="default" name="theme">🎨</button>
+<button type="submit" class="theme-option" style="width: 50px; height:50px;position: absolute;top: 0px;background-color: transparent;border: none;" value ="default" name="theme" id="theme_input_button">🎨</button>
 <script>
-     $("#theme_input_form").submit(function(e) {
-        e.preventDefault(); // prevent page refresh
+     document.getElementById("theme_input_button").onclick = function() {
         $.ajax({
             type: "POST",
             url: "scripts/theme.php",
-            data: $(this).serialize(), // serialize form data
-            success: function(data) {document.getElementById("forum_theme_link").setAttribute("href", data); },
+            data:  {"theme": "main"}, // serialize form data
+            success: function(data) {document.getElementById("forum_theme_link").setAttribute("href", data);},
             error: function() {
                 // Error ...
             }
         });
-    });
+    };
 </script>
-</form>
 </div>
 <?php
     echo("<h1 align=center class=\"forum_title\">{$FORUM_TITLE}</h1>");
