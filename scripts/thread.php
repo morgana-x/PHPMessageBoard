@@ -113,6 +113,31 @@ if (isAdmin())
 {
 echo('
 <script>
+			var lastData = "";
+			function refreshMessages()
+			{
+				$.ajax({
+                    type: "POST",
+                    url: "scripts/get_messages.php",
+                    processData: false,
+                    cache: false,
+                    contentType: false,
+                    data: {},// $(this).serialize(), // serialize form data
+                    success: function(data) {
+                        // Success ...
+                        if (lastData == data)
+							return;
+						lastData = data;
+						document.getElementById("messageboard").innerHTML = data;
+                        //$("#messageboard").load("scripts/get_messages.php");
+                        //$("thread_menu_title").load(scripts/)
+         
+                    },
+                    error: function() {
+                        // Error ...
+                    }
+                });
+			}
             function deleteMessage(thread, id)
             {
                 $.ajax({
@@ -139,7 +164,8 @@ echo('
                     success: function(data) {
                         // Success ...
 						console.log(data);
-                        $("#messageboard").load("scripts/get_messages.php");
+                        //$("#messageboard").load("scripts/get_messages.php");
+						refreshMessages();
                     },
                     error: function() {
                         // Error ...
@@ -156,7 +182,8 @@ echo('
                     success: function(data) {
                         // Success ...
 						console.log(data);
-                        $("#messageboard").load("scripts/get_messages.php");
+                        //$("#messageboard").load("scripts/get_messages.php");
+						refreshMessages();
                     },
                     error: function() {
                         // Error ...
@@ -172,8 +199,10 @@ echo('
 <script>
     $(document).ready(function(){
         setInterval(function() {
-            $("#messageboard").load("scripts/get_messages.php");
+           //$("#messageboard").load("scripts/get_messages.php");
+		   refreshMessages();
         }, 5000);
-        $("#messageboard").load("scripts/get_messages.php");
+		refreshMessages();
+        //$("#messageboard").load("scripts/get_messages.php");
     });
 </script>
