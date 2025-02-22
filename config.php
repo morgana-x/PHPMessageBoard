@@ -10,28 +10,12 @@
     define("UPLOADS_FOLDER_RELATIVE", "uploads");
     define("UPLOADS_FOLDER", __DIR__ . "/" . UPLOADS_FOLDER_RELATIVE);
     define("UPLOADS_ALLOWEDEXTENSIONS", array("png", "jpg", "jpeg", "webp", "jfif"));
-    define("UPLOADS_MAX_WIDTH", 1024);
-    define("UPLOADS_MAX_HEIGHT", 848);
-    define("UPLOADS_ALLOWEDFORMATS", array (
-        // IMAGETYPE_GIF,
-         IMAGETYPE_JPEG,
-         IMAGETYPE_PNG,
-       //  IMAGETYPE_SWF,
-      //   IMAGETYPE_PSD,
-         IMAGETYPE_BMP,
-     //    IMAGETYPE_TIFF_II,
-     /*    IMAGETYPE_TIFF_MM,
-         IMAGETYPE_JPC,
-         IMAGETYPE_JP2,
-         IMAGETYPE_JPX,
-         IMAGETYPE_JB2,*/
-      //   IMAGETYPE_SWC,
-      //   IMAGETYPE_IFF,*/
-         IMAGETYPE_WBMP,
-        // IMAGETYPE_XBM,
-        // IMAGETYPE_ICO 
-     ));
-    define("UPLOADS_MAXFILESIZE",1000000); // 1000000
+    define("UPLOADS_MAX_WIDTH", 1280);
+    define("UPLOADS_MAX_HEIGHT", 1280);
+	define("UPLOADS_MAX_WIDTH_RENDER", 1000); // Render in forums message
+    define("UPLOADS_MAX_HEIGHT_RENDER", 800); // Render in forums message
+    define("UPLOADS_ALLOWEDFORMATS", array (IMAGETYPE_GIF, IMAGETYPE_JPEG,IMAGETYPE_PNG, IMAGETYPE_WEBP, IMAGETYPE_BMP, IMAGETYPE_WBMP, IMAGETYPE_TIFF_MM, IMAGETYPE_TIFF_II,IMAGETYPE_JPC, IMAGETYPE_JP2, IMAGETYPE_JPX, IMAGETYPE_SWF,IMAGETYPE_XBM));
+    define("UPLOADS_MAXFILESIZE",1500000); // 1000000
     $defaultThreads = array(
         "main", 
         "cats", 

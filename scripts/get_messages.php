@@ -44,8 +44,14 @@
                 $msglog = trim(fgets($log));
                 if ($msglog == "")
                     continue;
-                $numberOfItems++;
-                $msgs[$numberOfItems-1] = unpackMessage($msglog);
+				try
+				{
+					$numberOfItems++;
+					$msgs[$numberOfItems-1] = unpackMessage($msglog);
+				}
+				catch(Exception $e)
+				{
+				}
             }
             if (count($msgs) == 0) return;
             $numberOfItems = 0;

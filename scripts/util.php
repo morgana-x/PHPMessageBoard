@@ -57,17 +57,46 @@
             $ip = substr($msg, 4, strlen($msg));
             return array($ip, unpack("i", $date)[1]);
         }
+		function needUpdateBans()
+		{
+			$log = fopen(BAN_FILE, "r");
+			while(!feof($log)) {
+                $msglog = trim(fgets($log));
+                if ($msglog == "")
+                    continue;
+				try
+				{
+					$msg = unpackBan($msglog);
+					if (time() < $msg[1]) continue;
+					fclose($log);
+					return true;
+				}
+				catch(Exception $e)
+				{
+				}
+			}
+			fclose($log);
+			return false;
+			
+		}
         function updateBans()
         {
+			if (!needUpdateBans()) return;
             $log = fopen(BAN_FILE, "r");
             $newbans = "";
             while(!feof($log)) {
                 $msglog = trim(fgets($log));
                 if ($msglog == "")
                     continue;
-                $msg = unpackBan($msglog);
-                if (time() > $msg[1]) continue;
-                $newbans += (pack("i",$msg[1]) . $msg[0] . "\n");
+				try
+				{
+					$msg = unpackBan($msglog);
+					if (time() > $msg[1]) continue;
+				}
+				catch(Exception $e) //  meh, stay banned
+				{
+				}
+                $newbans .= $msglog . "\n";
             }
             fclose($log);
             $log = fopen(BAN_FILE, "w");

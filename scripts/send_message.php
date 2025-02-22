@@ -34,11 +34,11 @@
             //printMessage($name, $msg);
         }
         $uploadedFile = check_image_upload();
-        if ( $uploadedFile == "" and !isset($_POST["message"]))
+        if ( $uploadedFile == NULL and !isset($_POST["message"]))
             return;
         $message = filterMessage("message");
-        if ($uploadedFile != "")
-            $message .= "<br><img src=\"$uploadedFile\" alt=\"Uploaded file\">";
+        if ($uploadedFile != NULL)
+            $message .= "<br><img src=\"$uploadedFile[0]\" alt=\"Uploaded file\" " . $uploadedFile[1] . ">";
         if (trim($message) == "")
             return;
         $thread = getCurrentThread();
