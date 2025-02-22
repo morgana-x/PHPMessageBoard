@@ -84,7 +84,29 @@
 			}
         }
         fclose($log);
-        deleteMessage($thread, $id);
+        //deleteMessage($thread, $id);
+    }
+	function unbanMessagePoster($thread, $id)
+    {
+        $log = fopen(getThreadFile($thread), "r");
+        while(!feof($log)) {
+            $msglog = trim(fgets($log));
+            if ($msglog == "")
+                continue;
+			try{
+				$msg = unpackMessage($msglog);
+				strval($msg[0]);
+				if (strval($msg[0]) != strval($id))
+					continue;
+				unbanIP($msg[3]);
+				break;
+			}
+			catch(Exception $e)
+			{
+			}
+        }
+        fclose($log);
+       // deleteMessage($thread, $id);
     }
 
 
@@ -116,8 +138,47 @@
         echo($deleteThread);
         banMessagePoster($deleteThread, $deleteId);
     }
+	function checkUnbanIP()
+    {
+        if(!isAdmin()) return;
+        if ((!isset($_POST["unban_ip"])))
+            return;
+        echo("Check ban!2");
+        $deleteId = $_POST["unban_ip"];
+        unset($_POST["unban_ip"]);
+        echo($deleteId . "<br>");
+        unbanIP($deleteId);
+    }
+	function checkBanIP()
+    {
+        if(!isAdmin()) return;
+        if (!isset($_POST["ban_ip"]))
+            return;
+        echo("Check ban!2");
+        $deleteId = $_POST["ban_ip"];
+        unset($_POST["ban_ip"]);
+        echo($deleteId . "<br>");
+        unbanIP($deleteId);
+    }
+	function checkUnban()
+	{
+		if(!isAdmin()) return;
+        if ((!isset($_POST["unban_msg_thread"])) or !isset($_POST["unban_msg_id"]))
+            return;
+        echo("Check ban!2");
+        $deleteId = $_POST["unban_msg_id"];
+        $deleteThread = $_POST["unban_msg_thread"];
+        unset($_POST["unban_msg_thread"]);
+        unset($_POST["unban_msg_id"]);
+        echo($deleteId . "<br>");
+        echo($deleteThread);
+        unbanMessagePoster($deleteThread, $deleteId);
+	}
     checkAdminLogin();
     checkAdminLogout();
     checkDelete();
     checkBan();
+	checkUnban();
+	checkBanIP();
+	checkUnbanIP();
 ?>

@@ -121,6 +121,7 @@ echo('
                     data: {"del_msg_thread":thread, "del_msg_id":id}, // serialize form data
                     success: function(data) {
                         // Success ...
+						console.log(data);
                         $("#messageboard").load("scripts/get_messages.php");
                     },
                     error: function() {
@@ -137,13 +138,31 @@ echo('
                     data: {"ban_msg_thread":thread, "ban_msg_id":id}, // serialize form data
                     success: function(data) {
                         // Success ...
+						console.log(data);
                         $("#messageboard").load("scripts/get_messages.php");
                     },
                     error: function() {
                         // Error ...
                     }
                 });
-            }  
+            } 
+			function unbanMessage(thread, id)
+            {
+                if (!confirm("Hold up!!! Do you really want to UNBAN this guy!?!?!?!")) return;
+                $.ajax({
+                    type: "POST",
+                    url: "scripts/admin.php",
+                    data: {"unban_msg_thread":thread, "unban_msg_id":id}, // serialize form data
+                    success: function(data) {
+                        // Success ...
+						console.log(data);
+                        $("#messageboard").load("scripts/get_messages.php");
+                    },
+                    error: function() {
+                        // Error ...
+                    }
+                });
+            } 			
 </script>'
 );
 }

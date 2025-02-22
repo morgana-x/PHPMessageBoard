@@ -115,6 +115,30 @@
             fwrite($log, pack("i", time() + $duration) . $ip . "\n" );
             fclose($log);
         }
+		function unbanIP($ip)
+		{
+			if (!isBanned($ip)) return; 
+			$log = fopen(BAN_FILE, "r");
+            $newbans = "";
+            while(!feof($log)) {
+                $msglog = trim(fgets($log));
+                if ($msglog == "")
+                    continue;
+				try
+				{
+					$msg = unpackBan($msglog);
+					if ($ip == $msg[0]) continue;
+				}
+				catch(Exception $e) //  meh, stay banned
+				{
+				}
+                $newbans .= $msglog . "\n";
+            }
+            fclose($log);
+            $log = fopen(BAN_FILE, "w");
+            fwrite($log, $newbans);
+            fclose($log);
+		}
         function getCurrentThread()
         {
             $threads = getThreads();
