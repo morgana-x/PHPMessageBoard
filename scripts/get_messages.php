@@ -88,13 +88,16 @@
             {
 
             }*/
+			$banned = isBanned($ipAddr);
             $ipAddr = substr(hash('crc32', $ipAddr),0,5);
-
+			$tag = "";
+			if ($banned)
+				$tag .= '<span style="color:red;">[BANNED] </span>';
             $offset *= 20;
             $msg = str_replace(array("\\n", "\\r"), "<br>", $msg);
             echo("<div id=\"{$id}\" class = \"thread_message\" style=\"margin-left:{$offset}px; width:90%\">");
             echo("<h6 style=\"margin-top:0px; margin-bottom:0px;\">{$date}</h5>");
-            echo("<h5 style=\"margin-top:0px; margin-bottom:0px;\">{$name}({$ipAddr}):</h5>");
+            echo("<h5 style=\"margin-top:0px; margin-bottom:0px;\">{$tag}{$name}({$ipAddr}):</h5>");
             //echo("<h5>{$name}:</h5>");
             echo("<p style=\"margin-top:0px; margin-bottom:0px;\">{$msg}</p>");
             $thread = getCurrentThread();

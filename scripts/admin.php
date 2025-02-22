@@ -71,12 +71,17 @@
             $msglog = trim(fgets($log));
             if ($msglog == "")
                 continue;
-            $msg = unpackMessage($msglog);
-            strval($msg[0]);
-            if (strval($msg[0]) != strval($id))
-                continue;
-            banIP($msg[3]);
-            break;
+			try{
+				$msg = unpackMessage($msglog);
+				strval($msg[0]);
+				if (strval($msg[0]) != strval($id))
+					continue;
+				banIP($msg[3]);
+				break;
+			}
+			catch(Exception $e)
+			{
+			}
         }
         fclose($log);
         deleteMessage($thread, $id);
