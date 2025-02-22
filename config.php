@@ -70,10 +70,9 @@
         touch(BAN_FILE);
        // chmod(BAN_FILE, 606);
     }
-    $threads_file = fopen(THREAD_FILE, "r");
-    if (!is_dir(THREAD_FOLDER))
+	if (!is_dir(THREAD_FOLDER))
         mkdir(THREAD_FOLDER, 606, true);
-
+    $threads_file = fopen(THREAD_FILE, "r");
     while(!feof($threads_file)) {
         $thread = fgets($threads_file);
         $thread = trim($thread);
@@ -84,4 +83,5 @@
         touch($path);
         chmod($path, 0600);
     }
+	fclose($threads_file);
 ?>
