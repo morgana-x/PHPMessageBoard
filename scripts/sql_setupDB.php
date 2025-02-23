@@ -39,9 +39,8 @@
         )";
     $conn->query($sql);
     $sql = "CREATE TABLE IF NOT EXISTS FORUM_ACCOUNTS (
-        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        user_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        user_id INT,
         user_name VARCHAR(30) NOT NULL,
         user_ip VARCHAR(30),
         user_rank INT
