@@ -41,6 +41,7 @@
     }
     function checkBanExpire($ip)
     {
+        if (!FORUM_SQL_ENABLED) return false;
         $banInfo = getBanInfo($ip);
         if ($banInfo == null) return true;
         //echo($banInfo["ban_date"]);
