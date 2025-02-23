@@ -11,14 +11,13 @@
             {
                 $.ajax({
                     type: "POST",
-                    url: "scripts/select_thread.php",
+                    url: "api/thread_select.php",
                     data: {"thread":thread}, // serialize form data
                     success: function(data) {
                         // Success ...
                         document.getElementById("messageInput").value = "";
                         document.getElementById("current_thread_title").innerText = data + " thread";
-                        $("#messageboard").load("scripts/get_messages.php");
-                        //$("thread_menu_title").load(scripts/)
+                        refreshMessages();
                     },
                     error: function() {
                         // Error ...
@@ -38,7 +37,7 @@
 
 <br>
 
-<form action="scripts/send_message.php" method="post" id="thread_message_input_forum" enctype="multipart/form-data">
+<form action="api/send_message.php" method="post" id="thread_message_input_forum" enctype="multipart/form-data">
 <div class="thread_message_inputbox" id="thread_message_inputbox">
         <label>Username:</label><br>
         <?php
@@ -65,7 +64,7 @@
                 data.append("file",$('#msg_attachment')[0].files[0]);//document.getElementById("msg_attachment").value;
                 $.ajax({
                     type: "POST",
-                    url: "scripts/send_message.php",
+                    url: "api/message_send.php",
                     processData: false,
                     cache: false,
                     contentType: false,
@@ -78,7 +77,7 @@
                         if (data!="")
                             alert(data);
                         document.getElementById("messageInput").value = "";
-                        $("#messageboard").load("scripts/get_messages.php");
+                        refreshMessages();
                         //$("thread_menu_title").load(scripts/)
          
                     },
@@ -107,31 +106,6 @@
                         counter.classList.remove("warning");
                     }
                 });
-				var lastData = "";
-				function refreshMessages()
-				{
-					$.ajax({
-						type: "POST",
-						url: "scripts/get_messages.php",
-						processData: false,
-						cache: false,
-						contentType: false,
-						data: {},// $(this).serialize(), // serialize form data
-						success: function(data) {
-							// Success ...
-							if (lastData == data)
-								return;
-							lastData = data;
-							document.getElementById("messageboard").innerHTML = data;
-							//$("#messageboard").load("scripts/get_messages.php");
-							//$("thread_menu_title").load(scripts/)
-			 
-						},
-						error: function() {
-							// Error ...
-						}
-					});
-				}
 </script>
 <?php
 
@@ -143,12 +117,12 @@ echo('
             {
                 $.ajax({
                     type: "POST",
-                    url: "scripts/admin.php",
+                    url: "api/admin.php",
                     data: {"del_msg_thread":thread, "del_msg_id":id}, // serialize form data
                     success: function(data) {
                         // Success ...
 						console.log(data);
-                        $("#messageboard").load("scripts/get_messages.php");
+                        refreshMessages();
                     },
                     error: function() {
                         // Error ...
@@ -160,12 +134,11 @@ echo('
                 if (!confirm("Hold up!!! Do you really want to temp ban this guy!?!?!?!")) return;
                 $.ajax({
                     type: "POST",
-                    url: "scripts/admin.php",
+                    url: "api/admin.php",
                     data: {"ban_msg_thread":thread, "ban_msg_id":id}, // serialize form data
                     success: function(data) {
                         // Success ...
 						console.log(data);
-                        //$("#messageboard").load("scripts/get_messages.php");
 						refreshMessages();
                     },
                     error: function() {
@@ -178,7 +151,7 @@ echo('
                 if (!confirm("Hold up!!! Do you really want to UNBAN this guy!?!?!?!")) return;
                 $.ajax({
                     type: "POST",
-                    url: "scripts/admin.php",
+                    url: "api/admin.php",
                     data: {"unban_msg_thread":thread, "unban_msg_id":id}, // serialize form data
                     success: function(data) {
                         // Success ...

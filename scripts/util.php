@@ -1,4 +1,9 @@
 <?php
+        if (FORUM_SQL_ENABLED)
+        {
+            include("sql_moderation.php");  
+            include("sql_messages.php");
+        }
         function getThreadFile(string $thread)
         {
             return THREAD_FOLDER . "/{$thread}.txt";
@@ -39,6 +44,8 @@
         }
         function getBannedIps()
         {
+            if (FORUM_SQL_ENABLED) // temp
+                return array();
             $bans = array();
             $log = fopen(BAN_FILE, "r");
             while(!feof($log)) {
@@ -51,6 +58,54 @@
             fclose($log);
             return $bans;
         }
+        function get_messages_file($thread)
+        {
+            $log = fopen(getThreadFile($thread), "r");
+            $msgs = array();
+            $numberOfItems = 0;
+            while(!feof($log)) {
+                $msglog = trim(fgets($log));
+                if ($msglog == "")
+                    continue;
+				try
+				{
+					$numberOfItems++;
+					$msgs[$numberOfItems-1] = unpackMessage($msglog);
+				}
+				catch(Exception $e)
+				{
+				}
+            }
+            fclose($log);
+            return $msgs;
+        }
+        function get_messages($thread)
+        {
+            if (FORUM_SQL_ENABLED)
+                return get_messages_sql($thread);
+            return get_messages_file($thread);
+        }
+        function migrateMessagesToSQL()
+        {
+            if( null == (THREAD_FOLDER)) return;
+            if (!is_dir(THREAD_FOLDER)) return;
+            /*
+            $name = $msg[2];
+            $ipAddr = $msg[3];
+            $msg = $msg[4];
+            */
+            foreach (scandir(THREAD_FOLDER) as $f)
+            {
+                if (!str_ends_with($f, ".txt"))
+                    continue;
+                $thread_name = str_replace(".txt","",$f);
+                //echo($thread_name);
+                $msgs = get_messages_file($thread_name);
+                foreach($msgs as $msg)
+                    send_message_sql($thread_name, $msg[2], $msg[3], $msg[4]);
+                unlink(THREAD_FOLDER . "/". $f);
+            }
+        }
         function unpackBan($msg)
         {
             $date = substr($msg, 0, 4);
@@ -59,6 +114,7 @@
         }
 		function needUpdateBans()
 		{
+            if (FORUM_SQL_ENABLED) return false;
 			$log = fopen(BAN_FILE, "r");
 			while(!feof($log)) {
                 $msglog = trim(fgets($log));
@@ -77,7 +133,6 @@
 			}
 			fclose($log);
 			return false;
-			
 		}
         function updateBans()
         {
@@ -106,11 +161,18 @@
         }
         function isBanned($ip)
         {
+            if (FORUM_SQL_ENABLED)
+                return isBanned_sql($ip);
             return in_array($ip, array_keys(getBannedIps()));
         }
         function banIP($ip, $duration=172800) // 604800
         {
             if (isBanned($ip)) return; // Too lazy and its 4 am
+            if (FORUM_SQL_ENABLED)
+            {
+                banIP_sql($ip, $duration);
+                return;
+            }
             $log = fopen(BAN_FILE, "a");
             fwrite($log, pack("i", time() + $duration) . $ip . "\n" );
             fclose($log);
@@ -118,6 +180,11 @@
 		function unbanIP($ip)
 		{
 			if (!isBanned($ip)) return; 
+            if (FORUM_SQL_ENABLED)
+            {
+                unbanIP_sql($ip);
+                return;
+            }
 			$log = fopen(BAN_FILE, "r");
             $newbans = "";
             while(!feof($log)) {

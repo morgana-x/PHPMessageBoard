@@ -12,7 +12,7 @@
             {
                   $.ajax({
                     type: "POST",
-                    url: "scripts/admin.php",
+                    url: "api/admin.php",
                     data: {"logout":"true"}, // serialize form data
                     success: function(data) {
                         // Success ...
@@ -61,7 +61,7 @@
             {
                 $.ajax({
                     type: "POST",
-                    url: "scripts/admin.php",
+                    url: "api/admin.php",
                     data: {"login_user":user, "login_pw":pw}, // serialize form data
                     success: function(data) {
                         console.log(data);
@@ -82,11 +82,38 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <div class="theme-menu" style="text-align: left; position: absolute;top: 0px;">
 <button type="submit" class="theme-option" style="width: 50px; height:50px;position: absolute;top: 0px;background-color: transparent;border: none;" value ="default" name="theme" id="theme_input_button">🎨</button>
+
+
 <script>
+    var lastData = "";
+    function refreshMessages()
+    {
+        $.ajax({
+            type: "POST",
+            url: "api/message_get.php",
+            processData: false,
+            cache: false,
+            contentType: false,
+            data: {},// $(this).serialize(), // serialize form data
+            success: function(data) {
+                // Success ...
+                if (lastData == data)
+                    return;
+                lastData = data;
+                document.getElementById("messageboard").innerHTML = data;
+                //$("#messageboard").load("scripts/get_messages.php");
+                //$("thread_menu_title").load(scripts/)
+    
+            },
+            error: function() {
+                // Error ...
+            }
+        });
+    }
      document.getElementById("theme_input_button").onclick = function() {
         $.ajax({
             type: "POST",
-            url: "scripts/theme.php",
+            url: "api/theme.php",
             data:  {"theme": "main"}, // serialize form data
             success: function(data) {document.getElementById("forum_theme_link").setAttribute("href", data);},
             error: function() {
