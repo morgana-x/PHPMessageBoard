@@ -5,7 +5,7 @@
     define("THREAD_FILE",  __DIR__ . "/threads.txt");
     define("UPLOADS_FOLDER_RELATIVE", "uploads");
     define("UPLOADS_FOLDER", __DIR__ . "/" . UPLOADS_FOLDER_RELATIVE);
-    define("UPLOADS_ALLOWEDEXTENSIONS", array("png", "jpg", "jpeg", "webp", "jfif"));
+    define("UPLOADS_ALLOWEDEXTENSIONS", array("png", "jpg", "jpeg", "webp", "jfif", "gif"));
     define("UPLOADS_MAX_WIDTH", 1280);
     define("UPLOADS_MAX_HEIGHT", 1280);
 	define("UPLOADS_MAX_WIDTH_RENDER", 1000); // Render in forums message
