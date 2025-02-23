@@ -20,7 +20,7 @@
     if (!file_exists(SQLCONFIG_FILE))
     {
         $cfgFileCreate = fopen(SQLCONFIG_FILE, "w");
-        fwrite($cfgFileCreate, "enabled: true\nserver-name: localhost\nuser-name: user\npassword: password");
+        fwrite($cfgFileCreate, "enabled: true\nserver-name: localhost\nuser-name: root\npassword:");
         fclose($cfgFileCreate);
     }
     $sqlcfgFile = fopen(SQLCONFIG_FILE, "r");
