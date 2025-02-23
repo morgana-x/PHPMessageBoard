@@ -17,6 +17,8 @@
         echo("Please wait a few days or so before returning!");
         return;
     }
+    if (FORUM_SQL_ENABLED)
+        migrateMessagesToSQL();
     include("scripts/header.php");
     include("scripts/thread.php");
     updateBans();
