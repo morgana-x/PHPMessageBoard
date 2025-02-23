@@ -10,7 +10,7 @@
     session_start();
     include("config.php");
     include("scripts/util.php");
-    if (isBanned(getIp()) )
+    if (isBanned(getIp()) && !checkBanExpire(getIp()))
     {
         echo("</head>");
         echo("You are temp banned from this message board1!1!");

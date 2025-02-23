@@ -59,4 +59,17 @@
         $conn->query($sql);
         $conn->close();
     }
+    function migrate_message_sql($thread, $username, $ipAddr, $msg, $date)
+    {
+        $conn = new mysqli(
+            FORUM_SQL_SERVERNAME, 
+            FORUM_SQL_USERNAME,
+             FORUM_SQL_PASSWORD, "MSGBOARD");
+        $msg = str_replace("'", "''", $msg); // do for username
+        $username = str_replace("'", "''", $username);
+        $thread = str_replace("'", "''", $thread);
+        $sql = "INSERT INTO FORUM_MESSAGES (thread, user_name, user_ip, message_text, post_date)VALUES ('{$thread}', '{$username}', '{$ipAddr}', '{$msg}', '$date')";
+        $conn->query($sql);
+        $conn->close();
+    }
 ?>
