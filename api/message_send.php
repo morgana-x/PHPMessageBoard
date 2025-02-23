@@ -9,6 +9,8 @@
             $key = isset($_POST[$key]) ? filter_input(INPUT_POST, $key, FILTER_DEFAULT) : "";
             $key = trim($key);
             $key = str_replace(array("\r", "\n"), '\\n', $key);
+            $key = str_replace(array("<br>"), "", $key);
+            //$key = str_replace(array("\\n", "\\r", "\n", "\r"), "<br>", $key);
             if (strlen($key) > 1024)
                 $key = substr($key, 0, 1024);
             return $key;
