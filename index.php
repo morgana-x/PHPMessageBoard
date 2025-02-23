@@ -19,6 +19,11 @@
     }
     if (FORUM_SQL_ENABLED)
         migrateMessagesToSQL();
+    if (isset($_GET["thread"])) // Just a hacky temp method of getting thread via get request if people want to make a link to a thread
+    {
+        $_SESSION["thread"] = $_GET["thread"];
+        $_SESSION["thread"]= getCurrentThread();
+    }
     include("scripts/header.php");
     include("scripts/thread.php");
     updateBans();
