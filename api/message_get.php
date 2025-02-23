@@ -1,7 +1,7 @@
 <?php
         session_start();
         include("../config.php");
-        include("util.php");
+        include("../scripts/util.php");
         if (isBanned(getIp())) return;
         function getNumberOfPages($thread)
         {
@@ -16,6 +16,8 @@
         }
         function print_pages($thread)
         {
+            if (FORUM_SQL_ENABLED)
+                return 1;
             $page = isset($_POST["page"]) ? filter_input(INPUT_POST, "page", FILTER_SANITIZE_NUMBER_INT) : 0;
             $numPages = getNumberOfPages($thread);
            
@@ -36,23 +38,8 @@
         }
         function printMessages(string $thread, $page=0)
         {
-            $log = fopen(getThreadFile($thread), "r");
-            echo("<div>");
-            $msgs = array();
-            $numberOfItems = 0;
-            while(!feof($log)) {
-                $msglog = trim(fgets($log));
-                if ($msglog == "")
-                    continue;
-				try
-				{
-					$numberOfItems++;
-					$msgs[$numberOfItems-1] = unpackMessage($msglog);
-				}
-				catch(Exception $e)
-				{
-				}
-            }
+            echo("<div>");  
+            $msgs = get_messages($thread);
             if (count($msgs) == 0) return;
             $numberOfItems = 0;
             $startIndex = count($msgs)-1;
@@ -65,6 +52,7 @@
             }
             echo("</div>");
         }
+        
         function printMessage($msg, int $offset=1)//$name, $msg, int $offset=1)
         {
             $id = $msg[0];

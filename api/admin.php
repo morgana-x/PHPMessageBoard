@@ -1,7 +1,7 @@
 <?php
     session_start();
     include("../config.php");
-    include("util.php");
+    include("../scripts/util.php");
     if (isBanned(getIp())) return;
 
     function checkAdminLogin()
@@ -46,6 +46,11 @@
     }
     function deleteMessage($thread, $id)
     {
+        if (FORUM_SQL_ENABLED)
+        {
+            delete_message_sql($thread, $id);
+            return;
+        }
         $newTextDoc = "";
         $log = fopen(getThreadFile($thread), "r");
         while(!feof($log)) {
@@ -66,47 +71,25 @@
     }
     function banMessagePoster($thread, $id)
     {
-        $log = fopen(getThreadFile($thread), "r");
-        while(!feof($log)) {
-            $msglog = trim(fgets($log));
-            if ($msglog == "")
+        $msgs = get_messages($thread);
+        foreach($msgs as $msg)
+        {
+            if ($msg[0] != $id)
                 continue;
-			try{
-				$msg = unpackMessage($msglog);
-				strval($msg[0]);
-				if (strval($msg[0]) != strval($id))
-					continue;
-				banIP($msg[3]);
-				break;
-			}
-			catch(Exception $e)
-			{
-			}
+            banIP($msg[3]);
+            break;
         }
-        fclose($log);
-        //deleteMessage($thread, $id);
     }
 	function unbanMessagePoster($thread, $id)
     {
-        $log = fopen(getThreadFile($thread), "r");
-        while(!feof($log)) {
-            $msglog = trim(fgets($log));
-            if ($msglog == "")
+        $msgs = get_messages($thread);
+        foreach($msgs as $msg)
+        {
+            if ($msg[0] != $id)
                 continue;
-			try{
-				$msg = unpackMessage($msglog);
-				strval($msg[0]);
-				if (strval($msg[0]) != strval($id))
-					continue;
-				unbanIP($msg[3]);
-				break;
-			}
-			catch(Exception $e)
-			{
-			}
+            unbanIP($msg[3]);
+            break;
         }
-        fclose($log);
-       // deleteMessage($thread, $id);
     }
 
 

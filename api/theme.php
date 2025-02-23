@@ -1,7 +1,7 @@
 <?php
         session_start();
         include("../config.php");
-        include("util.php");
+        include("../scripts/util.php");
         if (isBanned(getIp())) return;
         function checkThemeSet()
         {

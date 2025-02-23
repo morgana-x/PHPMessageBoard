@@ -10,13 +10,15 @@
     session_start();
     include("config.php");
     include("scripts/util.php");
-    if (isBanned(getIp()) )
+    if (isBanned(getIp()) && !checkBanExpire(getIp()))
     {
         echo("</head>");
         echo("You are temp banned from this message board1!1!");
         echo("Please wait a few days or so before returning!");
         return;
     }
+    if (FORUM_SQL_ENABLED)
+        migrateMessagesToSQL();
     include("scripts/header.php");
     include("scripts/thread.php");
     updateBans();

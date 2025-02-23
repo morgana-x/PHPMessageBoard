@@ -1,9 +1,9 @@
 <?php
         session_start();
         include("../config.php");
-        include("util.php");
+        include("../scripts/util.php");
         if (isBanned(getIp())) return;
-        include("image_upload.php");
+        include("message_uploadimage.php");
         function filterMessage($key)
         {
             $key = isset($_POST[$key]) ? filter_input(INPUT_POST, $key, FILTER_DEFAULT) : "";
@@ -25,6 +25,11 @@
         }
         function appendmessage(string $thread, string $name, string $msg)
         {
+            if(FORUM_SQL_ENABLED)
+            {
+                send_message_sql($thread, $name, getIp(), $msg);
+                return;
+            }
             $log = fopen(getThreadFile($thread), "a");
             $id = pack("i",time());
             $timePacked = pack("i", time());
